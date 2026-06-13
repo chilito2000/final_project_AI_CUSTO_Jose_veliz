@@ -2,8 +2,19 @@
 
 
 class ContextStore:
+    _storage = {}
+
     def save(self, user_id, key, value):
-        raise NotImplementedError("CAG context storage is not implemented yet")
+        if user_id not in ContextStore._storage:
+            ContextStore._storage[user_id] = {}
+
+        ContextStore._storage[user_id][key] = value
+        return True
 
     def list_for_user(self, user_id):
-        raise NotImplementedError("CAG context retrieval is not implemented yet")
+        user_context = ContextStore._storage.get(user_id, {})
+
+        return [
+            {"key": key, "value": value}
+            for key, value in user_context.items()
+        ]
