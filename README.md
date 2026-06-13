@@ -1,49 +1,219 @@
-# Proyecto Examen Final - Módulo 3
+# Integración de Context-Augmented Generation (CAG)
 
-Proyecto base para la evaluación práctica del módulo 3. Los requisitos oficiales están en `Enunciado en la serie II de la evaluación final`.
+## Examen Final - Inteligencia Artificial
 
-## Inicio rápido
+**Universidad Mariano Gálvez de Guatemala**
+**Carrera:** Ingeniería en Sistemas de Información
+**Curso:** Inteligencia Artificial
+**Estudiante:** Josué Ricardo Enamorado Parham
 
-1. Abra la carpeta `ProyectoExamen`.
-2. Ejecute las pruebas base.
-3. Levante el backend.
-4. Abra el frontend para revisar el estado inicial.
+---
 
-## Estructura
+# Descripción del Proyecto
 
-| Ruta | Contenido |
-|---|---|
-| `backend/` | Código del servidor y lógica base del asistente. |
-| `frontend/` | Interfaz web estática para interactuar con el backend. |
-| `data/` | Base de conocimiento inicial del proyecto. |
-| `tests/base/` | Pruebas base que deben pasar desde el inicio. |
-| `tests/validation/` | Pruebas de validación de la entrega final. |
-| `docs/` | Espacio para documentación técnica y evidencias del estudiante. |
+El proyecto base proporcionaba una implementación de Retrieval-Augmented Generation (RAG) utilizando una base documental pequeña para responder preguntas relacionadas con el curso.
 
-## Ejecutar pruebas base
+Como parte del examen final se desarrolló una integración de Context-Augmented Generation (CAG), permitiendo almacenar contexto por usuario y utilizar dicho contexto en respuestas posteriores.
 
-```bash
-./scripts/run_base_tests.sh
+La solución implementada permite:
+
+* Guardar contexto personalizado por usuario.
+* Recuperar contexto almacenado.
+* Utilizar contexto previo para enriquecer respuestas.
+* Mantener compatibilidad con el sistema RAG original.
+* Validar funcionalidad mediante pruebas automatizadas.
+
+---
+
+# Arquitectura
+
+## Componentes Principales
+
+### Backend
+
+* `server.py`
+
+  * Expone los endpoints REST.
+  * Gestiona solicitudes de contexto y preguntas.
+
+* `assistant.py`
+
+  * Genera respuestas.
+  * Integra RAG y CAG.
+
+* `knowledge.py`
+
+  * Recuperación documental (RAG).
+
+* `context_store.py`
+
+  * Almacenamiento de contexto por usuario.
+
+* `cag.py`
+
+  * Aplicación del contexto a las respuestas.
+
+### Frontend
+
+Interfaz web para interactuar con el asistente.
+
+### Data
+
+Base de conocimiento utilizada por RAG.
+
+---
+
+# Funcionalidades Implementadas
+
+## Almacenamiento de Contexto
+
+Permite registrar información asociada a un usuario.
+
+Ejemplo:
+
+```json
+{
+  "user_id": "ana",
+  "key": "preferred_style",
+  "value": "explicaciones con analogias"
+}
 ```
 
-Estas pruebas validan que el proyecto inicial funciona correctamente.
+## Recuperación de Contexto
+
+Permite consultar el contexto previamente almacenado.
+
+## Uso de Contexto en Respuestas
+
+Las respuestas generadas consideran información almacenada previamente para el usuario.
+
+---
+
+# Metodología Scrum
+
+## Sprint 1
+
+### Objetivo
+
+Implementar almacenamiento y recuperación de contexto.
+
+### Actividades
+
+* Configuración del entorno.
+* Ejecución de pruebas base.
+* Análisis de arquitectura.
+* Implementación de ContextStore.
+
+### Resultado
+
+Contexto almacenado y recuperado correctamente.
+
+---
+
+## Sprint 2
+
+### Objetivo
+
+Integrar contexto dentro del flujo de respuestas.
+
+### Actividades
+
+* Implementación de cag.py.
+* Modificación de assistant.py.
+* Ejecución de validaciones.
+* Documentación final.
+
+### Resultado
+
+Las respuestas utilizan contexto previamente almacenado.
+
+---
+
+# BDD
+
+Los escenarios BDD se encuentran en:
+
+```text
+docs/bdd/escenarios-cag.feature
+```
+
+Incluyen:
+
+* Guardar contexto.
+* Recuperar contexto.
+* Utilizar contexto en respuestas.
+
+---
+
+# TDD
+
+La estrategia TDD utilizada se encuentra en:
+
+```text
+docs/tdd/plan-tdd.md
+```
+
+Proceso aplicado:
+
+1. Ejecutar pruebas iniciales.
+2. Analizar fallos.
+3. Implementar funcionalidades.
+4. Ejecutar validación final.
+
+Resultado:
+
+```text
+6 passed
+```
+
+---
+
+
+
+
+---
+
+# Uso de Inteligencia Artificial
+
+La IA fue utilizada como herramienta de apoyo para:
+
+* Interpretación de requisitos.
+* Diseño de solución.
+* Análisis de arquitectura.
+* Validación de implementación.
+
+Todas las decisiones finales, modificaciones y verificaciones fueron realizadas manualmente por el estudiante.
+
+---
+
+# Ejecución del Proyecto
+
+## Instalar dependencias
+
+```bash
+pip install pytest
+```
 
 ## Ejecutar backend
 
 ```bash
-PYTHONPATH=. python3 -m backend.server
+PYTHONPATH=. python -m backend.server
 ```
 
-El backend queda disponible en `http://127.0.0.1:8000`.
-
-## Abrir frontend
-
-Abra `frontend/index.html` en un navegador. También puede servir la carpeta con un servidor estático local si lo prefiere.
-
-## Validación final
+## Ejecutar pruebas
 
 ```bash
-./test.sh
+pytest
 ```
 
-En el proyecto base, la validación final está destinada a fallar. Debe utilizarse como autoevaluación cuando el trabajo solicitado en el enunciado esté completo.
+---
+
+# Resultado Final
+
+Validación completada exitosamente:
+
+```text
+6 passed
+```
+
+La implementación cumple con los requisitos establecidos para la integración de Context-Augmented Generation (CAG).
